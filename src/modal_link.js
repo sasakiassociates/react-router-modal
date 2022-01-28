@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';  // eslint-disable-line no-unused-vars
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ModalRoute from './modal_route';
 import getAriaProps from './get_aria_props';
 
@@ -38,7 +38,7 @@ type Props = {
 *   Say Hello
 * </ModalLink>
 */
-function ModalLink(props: Props): any {
+export default (function ModalLink(props: Props): any {
   const {
     exact,
     path,
@@ -51,19 +51,17 @@ function ModalLink(props: Props): any {
   } = props;
 
   return (
-    <Link to={path} className={linkClassName}>
-      {children}
-      <ModalRoute
-        exact={exact}
-        path={path}
-        props={props.props}
-        component={component}
-        className={modalClassName}
-        parentPath={parentPath || match.url}
-        {...getAriaProps(props)}
-      />
-    </Link>
+      <Link to={path} className={linkClassName}>
+        {children}
+        <ModalRoute
+            exact={exact}
+            path={path}
+            props={props.props}
+            component={component}
+            className={modalClassName}
+            parentPath={parentPath || match.url}
+            {...getAriaProps(props)}
+        />
+      </Link>
   );
-}
-
-export default withRouter(ModalLink);
+})

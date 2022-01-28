@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';  // eslint-disable-line no-unused-vars
-import { Route, withRouter } from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import Modal from './modal';
 
 type Match  = { url: string, params: any }
@@ -61,7 +61,9 @@ function getStackOrder(match) {
 * @param {string} parentPath - Either the parentPath specified in the ModalRoute, or a calculated value based on matched url
 * @param {string} closeModal A convenience method to close the modal by navigating to the parentPath
 */
-function ModalRoute(routeProps: Props): any {
+
+export default (function ModalRoute(routeProps: Props){
+
   const {
     path,
     parentPath,
@@ -89,22 +91,21 @@ function ModalRoute(routeProps: Props): any {
   }
 
   return (
-    <Route path={path} exact={exact} render={({match, location, history}) => (
-      <Modal
-        {...modalProps}
-        props={{
-          ...props,
-          match,
-          location,
-          history,
-          parentPath: getParentPath(match),
-          closeModal: () => history.push(getParentPath(match))
-        }}
-        stackOrder={getStackOrder(match)}
-        onBackdropClick={onBackdropClick || (() => history.push(getParentPath(match)))}
-      />
-    )} />
+      <Route path={path} exact={exact} render={({match, location, history}) => (
+          <Modal
+              {...modalProps}
+              props={{
+                ...props,
+                match,
+                location,
+                history,
+                parentPath: getParentPath(match),
+                closeModal: () => history.push(getParentPath(match))
+              }}
+              stackOrder={getStackOrder(match)}
+              onBackdropClick={onBackdropClick || (() => history.push(getParentPath(match)))}
+          />
+      )} />
   );
-}
+})
 
-export default withRouter(ModalRoute);
